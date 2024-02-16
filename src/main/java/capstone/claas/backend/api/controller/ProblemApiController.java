@@ -1,15 +1,13 @@
 package capstone.claas.backend.api.controller;
 
 import capstone.claas.backend.core.problem.Problem;
+import capstone.claas.backend.core.problem.dto.GradeRequest;
 import capstone.claas.backend.core.problem.dto.JoinRequest;
 import capstone.claas.backend.core.problem.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +66,14 @@ public class ProblemApiController {
 
         return ResponseEntity.ok()
                 .body(problem);
+    }
+
+    @PostMapping("grade")
+    public ResponseEntity<?> gradeProblem(@RequestBody GradeRequest req) {
+        Problem problem = problemService.findProblemByUuid(req.getUuid());
+        boolean ans = req.getAns().equals(problem.getAnswer());
+
+        return ResponseEntity.ok()
+                .body(ans);
     }
 }
