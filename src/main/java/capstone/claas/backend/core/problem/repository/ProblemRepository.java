@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ProblemRepository extends JpaRepository<UUID, Problem>, CustomJpqlRepository {
+public interface ProblemRepository extends JpaRepository<Problem, UUID>, CustomJpqlRepository {
+    @Override
+    <S extends Problem> S save(S entity);
 }
