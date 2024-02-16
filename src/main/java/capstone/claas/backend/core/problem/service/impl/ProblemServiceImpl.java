@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -31,5 +32,11 @@ public class ProblemServiceImpl implements ProblemService {
 
         problemRepository.save(problem);
         return problem;
+    }
+
+    @Override
+    public Problem findProblemByUuid(UUID uuid) {
+        return problemRepository.findOneByUuid(uuid)
+                .orElseThrow(() -> new NoSuchElementException());
     }
 }

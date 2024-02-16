@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface CustomJpqlRepository {
     List<Problem> findAllList( );
+    Optional<Problem> findOneByUuid(UUID uuid);
 }
