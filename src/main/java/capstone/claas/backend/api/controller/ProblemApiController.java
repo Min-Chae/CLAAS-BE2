@@ -44,15 +44,14 @@ public class ProblemApiController {
                 new JoinRequest("Balanced Parentheses", "Check if the given string has balanced parentheses.", "Use a stack to track opening and closing brackets.")
         ));
 
-        List<Problem> problems = new ArrayList<>();
 
         for (JoinRequest joinRequest : req) {
-            problems.add(problemService.join(joinRequest));
+            problemService.join(joinRequest);
         }
 
         return ResponseEntity
                 .ok()
-                .body(problems);
+                .body("[INFO] successfully enrolled");
     }
 
     @PostMapping("enroll")
