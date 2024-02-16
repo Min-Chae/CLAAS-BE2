@@ -24,4 +24,18 @@ public class CustomJpqlRepositoryImpl implements CustomJpqlRepository {
                 .setParameter("isDeleted", isDeleted)
                 .getResultList();
     }
+
+    @Override
+    public Optional<Problem> findOneByUuid(UUID uuid) {
+        return em.createQuery(
+                "SELECT P FROM Problem P WHERE P.isDeleted = :isDeleted AND P.uuid = :uuid", Problem.class
+        )
+                .setParameter("isDeleted", isDeleted)
+                .setParameter("uuid", uuid)
+                .getResultList()
+                .stream()
+                .findAny();
+    }
+
+
 }
