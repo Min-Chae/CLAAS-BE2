@@ -28,6 +28,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .title(joinRequest.getTitle())
                 .des(joinRequest.getDescription())
                 .ans(joinRequest.getAnswer())
+                .filePaths(joinRequest.getFilePath())
                 .build();
 
         problemRepository.save(problem);
