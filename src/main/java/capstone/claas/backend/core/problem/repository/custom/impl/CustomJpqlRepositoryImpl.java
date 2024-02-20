@@ -37,5 +37,18 @@ public class CustomJpqlRepositoryImpl implements CustomJpqlRepository {
                 .findAny();
     }
 
+    @Override
+    public Optional<Problem> findMaxNumProblem() {
+        List<Problem> problems =  em.createQuery(
+                "SELECT P FROM Problem P WHERE P.isDeleted = :isDeleted ORDER BY P.number DESC", Problem.class
+        )
+                .setParameter("isDeleted", isDeleted)
+                .getResultList( );
+        if (problems.size() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(problems.get(0));
+    }
+
 
 }

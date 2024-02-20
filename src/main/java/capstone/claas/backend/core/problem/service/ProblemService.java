@@ -10,4 +10,6 @@ public interface ProblemService {
     public List<Problem> getAllProblemList( );
     public Problem join(JoinRequest joinRequest);
     public Problem findProblemByUuid(UUID uuid);
+
+    public long findMaxProblemNumber( );
 }

@@ -29,6 +29,8 @@ public class ProblemServiceImpl implements ProblemService {
                 .des(joinRequest.getDescription())
                 .ans(joinRequest.getAnswer())
                 .filePaths(joinRequest.getFilePath())
+                .level(joinRequest.getLevel())
+                .num(findMaxProblemNumber( ))
                 .build();
 
         problemRepository.save(problem);
@@ -39,5 +41,14 @@ public class ProblemServiceImpl implements ProblemService {
     public Problem findProblemByUuid(UUID uuid) {
         return problemRepository.findOneByUuid(uuid)
                 .orElseThrow(() -> new NoSuchElementException());
+    }
+
+    @Override
+    public long findMaxProblemNumber() {
+        Problem problem = problemRepository.findMaxNumProblem( )
+                .orElse(null);
+
+        if (problem == null)    return 1;
+        return problem.getNumber() + 1;
     }
 }
