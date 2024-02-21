@@ -4,7 +4,7 @@ services:
   database:
     container_name: claas_db
     image: mysql/mysql-server:8.0
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_ROOT_HOST: '%'
       MYSQL_DATABASE: claas_db
