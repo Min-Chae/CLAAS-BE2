@@ -6,6 +6,8 @@ import capstone.claas.backend.core.member.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberService {
 
@@ -25,6 +27,7 @@ public class MemberService {
         member.setMemberId(memberId);
         member.setPassword(password);
         member.setNickname(nickname);
+        member.setScore(0);
 
         return memberRepository.save(member);
     }
@@ -46,5 +49,23 @@ public class MemberService {
         } else {
             return null;
         }
+    }
+
+    public boolean updateScoreByMemberId(String memberId, int score) {
+        Member member = memberRepository.findByMemberId(memberId);
+        
+        if (member != null) {
+            int currentScore = member.getScore();
+            int updatedScore = currentScore + score; // 점수를 10점 증가시킴
+            member.setScore(updatedScore);
+            memberRepository.save(member); // 업데이트된 멤버 정보를 저장
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Member> getAllMembers() {
+        return memberRepository.findAllOrderByScoreAsc();
     }
 }

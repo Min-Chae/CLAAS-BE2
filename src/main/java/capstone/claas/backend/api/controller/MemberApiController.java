@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import capstone.claas.backend.core.member.service.MemberService;
 import capstone.claas.backend.core.member.Member;
+import capstone.claas.backend.core.member.dto.ScoreRequest;
 import capstone.claas.backend.core.member.security.JwtTokenProvider;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "member")
@@ -66,4 +69,29 @@ public class MemberApiController {
         }
     }
 
+    @PostMapping("score")
+    public ResponseEntity<Integer> score(@RequestBody ScoreRequest request) {
+    String Id = jwtTokenProvider.getMemberIdFromToken(request.getToken());
+
+    switch (request.getLevel()) {
+        case "HARD":
+            memberService.updateScoreByMemberId(Id, 30);
+            return new ResponseEntity<>(30, HttpStatus.OK);
+        case "MEDIUM":
+            memberService.updateScoreByMemberId(Id, 20);
+            return new ResponseEntity<>(20, HttpStatus.OK);
+        case "LOW":
+            memberService.updateScoreByMemberId(Id, 10);
+            return new ResponseEntity<>(10, HttpStatus.OK);
+        default:
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @GetMapping("rank")
+    public ResponseEntity<List<Member>> getAllMembers() {
+        List<Member> members = memberService.getAllMembers();
+        return ResponseEntity.ok(members);
+    }
+        
 }
