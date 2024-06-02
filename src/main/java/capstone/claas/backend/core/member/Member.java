@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "tb_member")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Member {
     @Id
