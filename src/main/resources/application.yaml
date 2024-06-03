@@ -1,3 +1,5 @@
+jwt:
+  secret: secretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKey
 spring:
   jpa:
     open-in-view: true
@@ -28,4 +30,4 @@ spring:
     username: root
     password: claas,DB2024
 server:
-  port: 9000
+  port: 8000

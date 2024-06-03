@@ -10,12 +10,30 @@ services:
       MYSQL_DATABASE: claas_db
       MYSQL_ROOT_PASSWORD: claas,DB2024
       MYSQL_PASSWORD: claas,DB2024
-      MYSQL_USERNAME: root
+      MYSQL_USERNAME: suzy
     ports:
       - '3306:3306'
     volumes:
       - ./mysql/conf.d:/etc/mysql/conf.d
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
+    networks:
+      - claas_network
+
+  application:
+    container_name: claas_spring_app
+    restart: on-failure
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/claas_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: claas,DB2024
+    depends_on:
+      - database
     networks:
       - claas_network
 
