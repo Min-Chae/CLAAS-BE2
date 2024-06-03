@@ -11,6 +11,6 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, String> {
     Member findByMemberId(String memberId);
 
-    @Query("SELECT m FROM Member m ORDER BY m.score ASC")
-    List<Member> findAllOrderByScoreAsc();
+    @Query("SELECT m FROM Member m ORDER BY m.score DESC")
+    List<Member> findAllOrderByScoreDesc();
 }

@@ -3,6 +3,7 @@ package capstone.claas.backend.core.member.service;
 import capstone.claas.backend.core.member.Member;
 import capstone.claas.backend.core.member.repository.MemberRepository;
 import capstone.claas.backend.core.member.security.JwtTokenProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,6 @@ public class MemberService {
     }
 
     public List<Member> getAllMembers() {
-        return memberRepository.findAllOrderByScoreAsc();
+        return memberRepository.findAllOrderByScoreDesc();
     }
 }

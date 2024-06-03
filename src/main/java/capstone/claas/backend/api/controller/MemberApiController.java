@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import capstone.claas.backend.core.member.service.MemberService;
 import capstone.claas.backend.core.member.Member;
+import capstone.claas.backend.core.member.repository.MemberRepository;
 import capstone.claas.backend.core.member.dto.ScoreRequest;
 import capstone.claas.backend.core.member.security.JwtTokenProvider;
 
@@ -26,6 +27,9 @@ public class MemberApiController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -93,5 +97,22 @@ public class MemberApiController {
         List<Member> members = memberService.getAllMembers();
         return ResponseEntity.ok(members);
     }
-        
+
+    @GetMapping("/create_dummy")
+    public ResponseEntity<String> createDummyData() {
+        List<Member> dummyMembers = List.of(
+            new Member("user1", "password1", "nickname1", 10),
+            new Member("user2", "password2", "nickname2", 20),
+            new Member("user3", "password3", "nickname3", 30),
+            new Member("user4", "password4", "nickname4", 40),
+            new Member("user5", "password5", "nickname5", 50)
+        );
+
+        for (Member member : dummyMembers) {
+            memberRepository.save(member);
+        }
+
+        return ResponseEntity.ok().body("[INFO] successfully enrolled");
+    }
+    
 }
